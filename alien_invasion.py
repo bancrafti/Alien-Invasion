@@ -14,7 +14,7 @@ def run_game():
     screen = pygame.display.set_mode(
         (ai_settings.screen_width, ai_settings.screen_height)
     )  # 1200 pixels by 800 pixels
-    pygame.display.set_caption("Alien Invasion")
+    pygame.display.set_caption("Dush Dush!")
 
     # Make a ship, a group of bullets, a group of aliens
     ship = Ship(ai_settings, screen)
@@ -26,7 +26,7 @@ def run_game():
     aliens = Group()
 
     # Create a fleet of aliens
-    gf.create_fleet(ai_settings, screen, aliens)
+    gf.create_fleet(ai_settings, screen, aliens, ship)
 
     # set background color
     bg_color = (230, 230, 230)
