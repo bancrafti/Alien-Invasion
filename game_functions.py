@@ -79,9 +79,7 @@ def create_fleet(ai_settings, screen, aliens, ship):
     # Create the fleet of aliens
     for row_number in range(number_rows):
         for alien_number in range(number_aliens_x):
-            create_alien(
-                ai_settings, screen, aliens, alien_number, row_number
-            )  # Add `screen`
+            create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
 
 def fire_bullet(ai_settings, screen, ship, bullets):
@@ -108,3 +106,27 @@ def get_number_aliens_x(ai_settings, alien_width):
     available_space_x = ai_settings.screen_width - 2 * alien_width
     number_aliens_x = int(available_space_x / (2 * alien_width))
     return number_aliens_x
+
+
+def update_aliens(ai_settings, aliens):
+    """
+    Check if the fleet is at an edge,
+    and then update the positions of all the aliens in the fleet.
+    """
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()
+
+
+def check_fleet_edges(ai_settings, aliens):
+    """Respond appropriately if any aliens have reached an edge"""
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+
+def change_fleet_direction(ai_settings, aliens):
+    """Drop the entire fleet and change the fleet's direction"""
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction *= -1
